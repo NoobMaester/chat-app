@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Blip | Real-time Chat Application",
   description: "A modern real-time chat application built with Next.js. Connect and communicate with friends and colleagues instantly.",
   keywords: ["chat app", "messaging", "real-time communication", "next.js", "instant messaging"],
-  authors: [{ name: "Your Name" }],
+  authors: [{ name: "Noobmaester" }],
   creator: "Noobmaester",
   publisher: "Noobmaester",
   applicationName: "Chat App",
