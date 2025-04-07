@@ -1,41 +1,66 @@
 
 'use client'
 
-import { useState } from 'react'
-//import { createUserWithEmailAndPassword } from 'firebase/auth'
-//import { auth } from '../../firebase/config'
-//import { useRouter } from 'next/navigation'
-
 export default function RegisterPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  //const [error, setError] = useState('')
-  //const router = useRouter()
+  
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-2xl font-bold mb-4">Register</h1>
-      <p className="text-red-500 mb-2"></p>
-      <input
-        className="border p-2 mb-2 w-64"
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        className="border p-2 mb-4 w-64"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button
-        //onClick={handleRegister}
-        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
-      >
-        Register
-      </button>
-    </main>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 className="text-2xl font-bold text-[#7b3cd3] mb-6 text-center">Register</h1>
+        <form>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-gray-700 mb-2">
+              First Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your First Name"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#7b3cd3] text-gray-500"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="username" className="block text-gray-700 mb-2">
+              Last Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your Last Name"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#7b3cd3] text-gray-500"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-700 mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#7b3cd3] text-gray-500"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="password" className="block text-gray-700 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#7b3cd3] text-gray-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-[#7b3cd3] text-white py-2 rounded-lg hover:bg-[#7b3cd3] cursor-pointer"
+          >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
   )
 }
