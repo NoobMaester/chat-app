@@ -39,6 +39,10 @@ export default function Home() {
             Real-time chat made easy.
           </h1>
 
+          <div className=" bg-white text-2xl text-gray-900 dark:bg-gray-900 dark:text-white mb-6">
+            <p>this should change</p>
+          </div>
+
           <p className="text-gray-600 dark:text-gray-600 text-lg mb-8">
             Connect with friends and family instantly. Secure, simple, and fun.
           </p>
