@@ -31,11 +31,6 @@ export const metadata: Metadata = {
     url: "https://your-domain.com",
     siteName: "Chat App",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
-  themeColor: "#ffffff"
 };
 
 export default function RootLayout({
