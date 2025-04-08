@@ -12,8 +12,8 @@ export default function LoginPage() {
     return (
         <>
         <Headerr/>
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-md w-96">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+            <div className="bg-white p-8 rounded-lg shadow-md w-96 dark:bg-gray-900">
                 <h1 className="text-2xl font-bold text-[#7b3cd3] mb-6 text-center">Login</h1>
                 <form >
                     <div className="mb-4">

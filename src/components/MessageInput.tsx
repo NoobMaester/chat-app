@@ -15,7 +15,7 @@ export default function MessageInput() {
   return (
     <div className="flex gap-2">
       <input
-        className="flex-1 border border-[#b492e4] rounded px-4 py-2 text-gray-800 focus:outline-none"
+        className="flex-1 border border-[#b492e4] rounded px-4 py-2 text-gray-800 focus:outline-none dark:text-gray-100"
         type="text"
         placeholder="Type your message..."
         value={message}
@@ -24,7 +24,7 @@ export default function MessageInput() {
       />
       <button
         onClick={handleSend}
-        className="bg-[#7a3fd1] text-white px-4 py-2 rounded hover:bg-[#b492e4]"
+        className="bg-[#7a3fd1] text-gray-100 px-4 py-2 rounded hover:bg-[#b492e4]"
       >
         Send
       </button>

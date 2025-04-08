@@ -15,12 +15,12 @@ export default function Home() {
       router.push("/chat");
     }
   }, [router]);
-  
+
   return (
     <>
       <Headerr />
 
-      <main className="flex flex-col md:flex-row items-center justify-center min-h-[86.5vh] bg-white text-center px-4 gap-8">
+      <main className="flex flex-col md:flex-row items-center justify-center min-h-[86.5vh] bg-white text-center px-4 gap-8 dark:bg-gray-900">
         <div className="w-full max-w-2xl py-4">
           <Image
             src="/hero.svg"
@@ -33,17 +33,12 @@ export default function Home() {
           />
         </div>
 
-        <div className="max-w-3xl py-4">
-
+        <div className="max-w-3xl py-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Real-time chat made easy.
           </h1>
 
-          <div className=" bg-white text-2xl text-gray-900 dark:bg-gray-900 dark:text-white mb-6">
-            <p>this should change</p>
-          </div>
-
-          <p className="text-gray-600 dark:text-gray-600 text-lg mb-8">
+          <p className="text-gray-600 dark:text-white text-lg mb-8">
             Connect with friends and family instantly. Secure, simple, and fun.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">

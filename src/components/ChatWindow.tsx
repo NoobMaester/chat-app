@@ -3,7 +3,7 @@ import MessageInput from "./MessageInput";
 
 export default function ChatWindow() {
   return (
-    <main className="flex-1 flex flex-col justify-between bg-white">
+    <main className="flex-1 flex flex-col justify-between bg-white dark:bg-gray-900">
       <div className="flex-1 overflow-y-auto p-4">
         <MessageBubble
           text="Hello there!"
