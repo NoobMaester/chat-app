@@ -42,7 +42,7 @@ export default function LoginPage() {
                         type="submit"
                         className="w-full bg-[#7b3cd3] text-white py-2 rounded-lg hover:bg-[#7b3cd3] cursor-pointer"
                     >
-                        Log In
+                        LogIn
                     </button>
                 </form>
             </div>

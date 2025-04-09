@@ -15,18 +15,6 @@ export default function RegisterPage() {
         <h1 className="text-2xl font-bold text-[#7b3cd3] mb-6 text-center">Register</h1>
         <form>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 mb-2">
-               Username
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your User Name"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#7b3cd3] text-gray-500"
-              required
-            />
-          </div>
-          
-          <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 mb-2">
               Email
             </label>
@@ -37,6 +25,7 @@ export default function RegisterPage() {
               required
             />
           </div>
+
           <div className="mb-6">
             <label htmlFor="password" className="block text-gray-700 mb-2">
               Password
@@ -48,6 +37,7 @@ export default function RegisterPage() {
               required
             />
           </div>
+          
           <button
             type="submit"
             className="w-full bg-[#7b3cd3] text-white py-2 rounded-lg hover:bg-[#7b3cd3] cursor-pointer"
