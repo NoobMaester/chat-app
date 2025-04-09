@@ -16,26 +16,16 @@ export default function RegisterPage() {
         <form>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 mb-2">
-              First Name
+               Username
             </label>
             <input
               type="text"
-              placeholder="Enter your First Name"
+              placeholder="Enter your User Name"
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#7b3cd3] text-gray-500"
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-700 mb-2">
-              Last Name
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your Last Name"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-[#7b3cd3] text-gray-500"
-              required
-            />
-          </div>
+          
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 mb-2">
               Email
