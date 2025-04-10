@@ -1,9 +1,12 @@
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from './../firebase/config'
+import { saveUserToFirestore } from './saveUserToFirestore'
 
 export const register = async (email: string, password: string) => {
-  return await createUserWithEmailAndPassword(auth, email, password)
+  const response = await createUserWithEmailAndPassword(auth, email, password)
+  await saveUserToFirestore(response.user)
+  return response
 }
 
 export const login = async (email: string, password: string) => {
@@ -16,5 +19,7 @@ export const logout = async () => {
 
 export const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider()
-  return await signInWithPopup(auth, provider)
+  const response = await signInWithPopup(auth, provider)
+  await saveUserToFirestore(response.user)
+  return response
 }
