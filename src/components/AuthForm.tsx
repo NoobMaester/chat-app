@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { login, register } from "@/lib/auth";
+import { loginWithGoogle } from "@/lib/auth";
 
 type AuthFormProps = {
   type: "login" | "register";
@@ -25,6 +26,16 @@ export default function AuthForm({ type }: AuthFormProps) {
         await register(email, password);
       }
       router.push("/chat"); // Redirect to chat page after successful login/register
+    } catch (err: any) {
+      setError(err.message || "An error occurred. Please try again.");
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError(null);
+    try {
+      await loginWithGoogle();
+      router.push("/chat"); // Redirect to chat page after successful Signin
     } catch (err: any) {
       setError(err.message || "An error occurred. Please try again.");
     }
@@ -64,9 +75,18 @@ export default function AuthForm({ type }: AuthFormProps) {
 
       <button
         type="submit"
-        className="w-full bg-[#7b3cd3] text-white py-2 rounded-lg hover:bg-[#7b3cd3] cursor-pointer"
+        className="w-full bg-[#7b3cd3] text-white py-2 rounded-lg hover:bg-[#7b3cd3] cursor-pointer my-4"
       >
         {type === "login" ? "Login" : "Register"}
+      </button>
+
+      <button
+        type="button"
+        onClick={handleGoogleLogin}
+        className="w-full flex items-center justify-center gap-2 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
+      >
+        <img src="/google-color.svg" alt="Google" className="w-5 h-5" />
+        Continue with Google
       </button>
     </form>
   );
