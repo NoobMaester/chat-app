@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { login, register } from "@/lib/auth";
 import { loginWithGoogle } from "@/lib/auth";
+import Image from "next/image";
 
 type AuthFormProps = {
   type: "login" | "register";
@@ -26,8 +27,9 @@ export default function AuthForm({ type }: AuthFormProps) {
         await register(email, password);
       }
       router.push("/chat"); // Redirect to chat page after successful login/register
-    } catch (err: any) {
-      setError(err.message || "An error occurred. Please try again.");
+    } catch (err: Error | unknown) {
+      const error = err instanceof Error ? err.message : "An error occurred. Please try again.";
+      setError(error);
     }
   };
 
@@ -36,8 +38,9 @@ export default function AuthForm({ type }: AuthFormProps) {
     try {
       await loginWithGoogle();
       router.push("/chat"); // Redirect to chat page after successful Signin
-    } catch (err: any) {
-      setError(err.message || "An error occurred. Please try again.");
+    } catch (err: Error | unknown) {
+      const error = err instanceof Error ? err.message : "An error occurred. Please try again.";
+      setError(error);
     }
   };
 
@@ -85,7 +88,7 @@ export default function AuthForm({ type }: AuthFormProps) {
         onClick={handleGoogleLogin}
         className="w-full flex items-center justify-center gap-2 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
       >
-        <img src="/google-color.svg" alt="Google" className="w-5 h-5" />
+        <Image src="/google-color.svg" alt="Google" className="w-5 h-5" />
         Continue with Google
       </button>
     </form>
