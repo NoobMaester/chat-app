@@ -19,10 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Blip | Real-time Chat Application",
   icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
+    icon: '/favicon.ico',
   },
   description:
     "A modern real-time chat application built with Next.js. Connect and communicate with friends and colleagues instantly.",
