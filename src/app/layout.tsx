@@ -1,4 +1,4 @@
-'use client";'
+'use client";';
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -19,10 +19,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Blip | Real-time Chat Application",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
   },
-  description: "A modern real-time chat application built with Next.js. Connect and communicate with friends and colleagues instantly.",
-  keywords: ["chat app", "messaging", "real-time communication", "next.js", "instant messaging"],
+  description:
+    "A modern real-time chat application built with Next.js. Connect and communicate with friends and colleagues instantly.",
+  keywords: [
+    "chat app",
+    "messaging",
+    "real-time communication",
+    "next.js",
+    "instant messaging",
+  ],
   authors: [{ name: "Noobmaester" }],
   creator: "Noobmaester",
   publisher: "Noobmaester",
@@ -33,7 +43,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Blip | Real-time Messaging Platform",
-    description: "Connect and communicate in real-time with our modern chat application",
+    description:
+      "Connect and communicate in real-time with our modern chat application",
     type: "website",
     url: "https://your-domain.com",
     siteName: "Chat App",
@@ -53,11 +64,10 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem 
-          disableTransitionOnChange>
-            <AuthProvider>
-              {children}
-            </AuthProvider>
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
       </body>
     </html>
