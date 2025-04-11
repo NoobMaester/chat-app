@@ -88,7 +88,7 @@ export default function AuthForm({ type }: AuthFormProps) {
         onClick={handleGoogleLogin}
         className="w-full flex items-center justify-center gap-2 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer"
       >
-        <Image src="/google-color.svg" alt="Google" className="w-5 h-5" />
+        <Image src="/google-color.svg" alt="Google" width={20} height={20} />
         Continue with Google
       </button>
     </form>

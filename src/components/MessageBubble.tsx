@@ -3,6 +3,7 @@ interface MessageBubbleProps {
     text: string
     sender: string
     isCurrentUser: boolean
+    timestamp?: string
   }
   
   export default function MessageBubble({ text, sender, isCurrentUser }: MessageBubbleProps) {
