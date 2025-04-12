@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState } from 'react'
@@ -7,30 +6,50 @@ import { useAuth } from '../context/AuthContext'
 
 export default function MessageInput() {
   const [message, setMessage] = useState('')
-  const {user} = useAuth() 
+  const [isLoading, setIsLoading] = useState(false)
+  const { user } = useAuth()
 
   const handleSend = async () => {
-    if (!user || !message.trim()) return
-    await sendMessage(message, user.uid)
-    console.log('Send:', message)
-    setMessage('')
+    if (!user || !message.trim() || isLoading) return
+
+    try {
+      setIsLoading(true)
+      await sendMessage(message.trim(), user.uid)
+      setMessage('')
+    } catch (error) {
+      console.error('Failed to send message:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
     <div className="flex gap-2">
       <input
-        className="flex-1 border border-[#b492e4] rounded px-4 py-2 text-gray-800 focus:outline-none dark:text-gray-100"
         type="text"
-        placeholder="Type your message..."
         value={message}
+        disabled={isLoading}
         onChange={(e) => setMessage(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+        onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
+        placeholder="Type your message..."
+        className="flex-1 px-4 py-2 rounded 
+          bg-white dark:bg-gray-800 
+          text-gray-900 dark:text-gray-100
+          border border-[#b492e4] dark:border-gray-700
+          focus:outline-none focus:ring-2 focus:ring-[#7a3fd1]
+          disabled:opacity-50 disabled:cursor-not-allowed"
       />
       <button
         onClick={handleSend}
-        className="bg-[#7a3fd1] text-gray-100 px-4 py-2 rounded hover:bg-[#b492e4]"
+        disabled={!message.trim() || isLoading}
+        className="px-4 py-2 rounded font-medium
+          bg-[#7a3fd1] hover:bg-[#6a36b3] 
+          dark:bg-[#7a3fd1] dark:hover:bg-[#6a36b3]
+          text-white
+          disabled:opacity-50 disabled:cursor-not-allowed
+          transition-colors duration-200"
       >
-        Send
+        {isLoading ? 'Sending...' : 'Send'}
       </button>
     </div>
   )
