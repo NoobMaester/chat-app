@@ -2,12 +2,16 @@
 'use client'
 
 import { useState } from 'react'
+import { sendMessage } from '../lib/sendMessage'
+import { useAuth } from '../context/AuthContext'
 
 export default function MessageInput() {
   const [message, setMessage] = useState('')
+  const {user} = useAuth() 
 
-  const handleSend = () => {
-    if (message.trim() === '') return
+  const handleSend = async () => {
+    if (!user || !message.trim()) return
+    await sendMessage(message, user.uid)
     console.log('Send:', message)
     setMessage('')
   }
@@ -31,3 +35,4 @@ export default function MessageInput() {
     </div>
   )
 }
+
