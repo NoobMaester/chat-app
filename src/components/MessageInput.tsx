@@ -3,11 +3,26 @@
 import { useState } from 'react'
 import { sendMessage } from '../lib/sendMessage'
 import { useAuth } from '../context/AuthContext'
+import { setTypingStatus } from '@/lib/setTypingStatus'
+
 
 export default function MessageInput() {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { user } = useAuth()
+
+  let typeTypingTimeout: ReturnType<typeof setTimeout> 
+
+  const handleTyping = (value: string) => {
+    setMessage(value)
+    if (user) {
+      setTypingStatus(user.uid, true)
+      clearTimeout(typeTypingTimeout)
+      typeTypingTimeout = setTimeout(() => {
+        setTypingStatus(user.uid, false)
+      }, 2000)
+    }
+  }
 
   const handleSend = async () => {
     if (!user || !message.trim() || isLoading) return
@@ -28,8 +43,12 @@ export default function MessageInput() {
       <input
         type="text"
         value={message}
+        onFocus={() => user && setTypingStatus(user.uid, true)}
         disabled={isLoading}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={(e) => {
+          setMessage(e.target.value);
+          handleTyping(e.target.value);
+        }}
         onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
         placeholder="Type your message..."
         className="flex-1 px-4 py-2 rounded 
