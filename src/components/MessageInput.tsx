@@ -5,20 +5,20 @@ import { sendMessage } from '../lib/sendMessage'
 import { useAuth } from '../context/AuthContext'
 import { setTypingStatus } from '@/lib/setTypingStatus'
 
-
 export default function MessageInput() {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { user } = useAuth()
 
-  let typeTypingTimeout: ReturnType<typeof setTimeout> 
+  let typingTimeout: ReturnType<typeof setTimeout>
 
   const handleTyping = (value: string) => {
     setMessage(value)
+
     if (user) {
       setTypingStatus(user.uid, true)
-      clearTimeout(typeTypingTimeout)
-      typeTypingTimeout = setTimeout(() => {
+      clearTimeout(typingTimeout)
+      typingTimeout = setTimeout(() => {
         setTypingStatus(user.uid, false)
       }, 2000)
     }
@@ -29,7 +29,7 @@ export default function MessageInput() {
 
     try {
       setIsLoading(true)
-      await sendMessage(message.trim(), user.uid)
+      await sendMessage(message.trim(), { uid: user.uid, displayName: user.displayName || 'Anonymous' })
       setMessage('')
     } catch (error) {
       console.error('Failed to send message:', error)
@@ -45,10 +45,7 @@ export default function MessageInput() {
         value={message}
         onFocus={() => user && setTypingStatus(user.uid, true)}
         disabled={isLoading}
-        onChange={(e) => {
-          setMessage(e.target.value);
-          handleTyping(e.target.value);
-        }}
+        onChange={(e) => handleTyping(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
         placeholder="Type your message..."
         className="flex-1 px-4 py-2 rounded 

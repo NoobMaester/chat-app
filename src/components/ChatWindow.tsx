@@ -7,6 +7,7 @@ import { formatRelative } from "date-fns";
 
 export default function ChatWindow() {
   const { user } = useAuth();
+  console.log("ChatWindow user:", user); // Log the user object
   const messages = useChatMessages();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -24,8 +25,8 @@ export default function ChatWindow() {
             <div key={message.id}>
               <MessageBubble
                 text={message.text}
-                senderName={message.displayName || "Anonymous"}
-                isCurrentUser={message.senderId === user?.uid}
+                senderName={message.senderName || "Anonymous"} // Ensure senderName is used
+                isCurrentUser={message.senderId === user?.id}
                 timestamp={
                   message.timestamp?.toDate
                     ? formatRelative(message.timestamp.toDate(), new Date())

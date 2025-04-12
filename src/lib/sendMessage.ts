@@ -1,17 +1,17 @@
-import {db} from '../firebase/config'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { User } from 'firebase/auth'
+import { db } from '../firebase/config';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
-export const sendMessage = async (text: string, senderId: string, user: User | null) => {
+export const sendMessage = async (text: string, user: { uid: string; displayName?: string }) => {
+  if (!text.trim()) return;
 
-    if(!text.trim()) return
-
+  try {
     await addDoc(collection(db, 'messages'), {
-        text,
-        senderId,
-        senderName: user?.displayName || 'Anonymous',
-        timestamp: serverTimestamp()
-    }).catch((error) => {
-        console.error("Error adding document: ", error)
-    })
-}
+      text,
+      uid: user.uid,
+      senderName: user.displayName || 'Anonymous',
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error('Error adding document: ', error);
+  }
+};
