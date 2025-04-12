@@ -24,7 +24,7 @@ export default function ChatWindow() {
             <div key={message.id}>
               <MessageBubble
                 text={message.text}
-                sender={message.senderId}
+                senderName={message.displayName || "Anonymous"}
                 isCurrentUser={message.senderId === user?.uid}
                 timestamp={
                   message.timestamp?.toDate

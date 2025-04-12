@@ -6,6 +6,8 @@ export interface ChatMessage {
     id: string;
     text: string;
     senderId: string;
+    senderName: string;
+    displayName?: string;
     timestamp: Timestamp;
 }
 
