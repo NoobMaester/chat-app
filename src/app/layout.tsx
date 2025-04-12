@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/context/AuthContext";
+import { ChatProvider } from "@/context/ChatContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +20,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Blip | Real-time Chat Application",
   icons: {
-    icon: '/favicon.ico',
+    icon: "/favicon.ico",
   },
   description:
     "A modern real-time chat application built with Next.js. Connect and communicate with friends and colleagues instantly.",
@@ -58,14 +59,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>{children}</AuthProvider>
-        </ThemeProvider>
+        <ChatProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AuthProvider>{children}</AuthProvider>
+          </ThemeProvider>
+        </ChatProvider>
       </body>
     </html>
   );
