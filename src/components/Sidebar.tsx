@@ -29,7 +29,7 @@ export default function Sidebar() {
     <div className="p-4 space-y-2">
       <h2 className="text-lg font-semibold">Chats</h2>
       {chats.map((chat) => (
-        <Link key={chat.id} href={`/chat/${chat.id}`} className="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+        <Link key={chat.id} href={`/chat/${chat.id}`} className="block p-2 rounded hover:bg-[#7a3fd1] dark:hover:bg-[#7a3fd1]">
           {chat.name}
         </Link>
       ))}

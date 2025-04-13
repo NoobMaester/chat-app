@@ -42,7 +42,7 @@ export default function ChatPage() {
 
           {/* Main chat window */}
           <div className="flex flex-1 overflow-hidden">
-            <ChatWindow />
+            <ChatWindow chatId="default-chat-id" />
           </div>
         </div>
     </div>

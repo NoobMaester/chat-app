@@ -11,11 +11,11 @@ export interface ChatMessage {
     timestamp: Timestamp;
 }
 
-export default function useChatMessages() {
+export default function useChatMessages(chatId: string) {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
 
     useEffect(() => {
-        const q = query(collection(db, 'messages'), orderBy('timestamp', 'asc'));
+        const q = query(collection(db, 'chats', chatId, 'messages'), orderBy('timestamp', 'asc'));
 
         const unsubscribe = onSnapshot(q, (snapshot)=> {
             const messagesData: ChatMessage[] = snapshot.docs.map(doc => ({
@@ -25,7 +25,7 @@ export default function useChatMessages() {
             setMessages(messagesData);
         })
         return () => unsubscribe();
-    }, []);
+    }, [chatId]);
 
     return messages;
 }

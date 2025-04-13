@@ -5,7 +5,11 @@ import { sendMessage } from '../lib/sendMessage'
 import { useAuth } from '../context/AuthContext'
 import { setTypingStatus } from '@/lib/setTypingStatus'
 
-export default function MessageInput() {
+interface MessageInputProps {
+  chatId: string;
+}
+
+export default function MessageInput({ chatId }: MessageInputProps) {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { user } = useAuth()
@@ -29,7 +33,7 @@ export default function MessageInput() {
 
     try {
       setIsLoading(true)
-      await sendMessage(message.trim(), { uid: user.uid, displayName: user.displayName || 'Anonymous' })
+      await sendMessage(message.trim(), { uid: user.uid, displayName: user.displayName || 'Anonymous' }, chatId)
       setMessage('')
     } catch (error) {
       console.error('Failed to send message:', error)

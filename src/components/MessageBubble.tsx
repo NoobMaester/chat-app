@@ -17,13 +17,13 @@ export default function MessageBubble({
     <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} mb-4`}>
       <div 
         className={`
-          max-w-xs 
+          max-w-xs sm:max-w-md
           px-4 
-          py-2 
+          py-2  
           rounded-lg 
           shadow
           text-gray-100 
-          ${isCurrentUser ? 'bg-[#7a3fd1] text-right' : 'bg-[#ad87e4] text-left'}
+          ${isCurrentUser ? 'bg-[#7a3fd1] text-right rounded-br-none' : 'bg-[#ad87e4] text-left rounded-bl-none'}
         `}
       >
         {!isCurrentUser && (
