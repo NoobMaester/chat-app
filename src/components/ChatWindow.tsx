@@ -5,7 +5,11 @@ import useChatMessages from "@/hooks/useChatMessages";
 import { useAuth } from "@/context/AuthContext";
 import { formatRelative } from "date-fns";
 
-export default function ChatWindow() {
+interface ChatWindowProps {
+  chatId: string;
+}
+
+export default function ChatWindow({chatId}: ChatWindowProps) {
   const { user } = useAuth();
   console.log("ChatWindow user:", user); // Log the user object
   const messages = useChatMessages();
@@ -19,6 +23,7 @@ export default function ChatWindow() {
   return (
     <main className="flex-1 flex flex-col h-full bg-white dark:bg-gray-900">
       {/* Messages Container */}
+      <div>Chat Window for {chatId}</div>
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-col space-y-4 p-4">
           {messages.map((message) => (
@@ -26,7 +31,7 @@ export default function ChatWindow() {
               <MessageBubble
                 text={message.text}
                 senderName={message.senderName || "Anonymous"} // Ensure senderName is used
-                isCurrentUser={message.senderId === user?.id}
+                isCurrentUser={message.senderId === user?.uid}
                 timestamp={
                   message.timestamp?.toDate
                     ? formatRelative(message.timestamp.toDate(), new Date())
