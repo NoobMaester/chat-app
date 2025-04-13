@@ -7,7 +7,7 @@ export const sendMessage = async (text: string, user: { uid: string; displayName
   try {
     await addDoc(collection(db, 'chats', chatId, 'messages'), {
       text,
-      uid: user.uid,
+      senderId: user.uid,
       senderName: user.displayName || 'Anonymous',
       timestamp: serverTimestamp(),
     });

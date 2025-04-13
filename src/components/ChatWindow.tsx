@@ -14,7 +14,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
   const messages = useChatMessages(chatId); // Pass chatId to fetch messages for the specific chat
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when new messages arrive
+  // Auto-scroll to bottom when new messages arrive 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -29,7 +29,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
               <MessageBubble
                 text={message.text}
                 senderName={message.senderName || "Anonymous"}
-                isCurrentUser={message.senderId === user?.id}
+                isCurrentUser={message.senderId === user?.uid}
                 timestamp={
                   message.timestamp?.toDate
                     ? formatRelative(message.timestamp.toDate(), new Date())
