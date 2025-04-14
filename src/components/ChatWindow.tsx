@@ -21,6 +21,13 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
 
   return (
     <main className="flex-1 flex flex-col h-full bg-white dark:bg-gray-900">
+      {/* Chat Header */}
+      <div className="p-4 border-b-2 border-gray-300 dark:border-gray-700  bg-gray-100 dark:bg-gray-800">
+        <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+          {chatId} Chats
+        </h1>
+      </div>
+      
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-col space-y-4 p-4">
@@ -43,7 +50,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
       </div>
 
       {/* Message Input Area */}
-      <div className="p-4 border-t border-[#b492e4] dark:border-gray-800">
+      <div className="p-4 border-t-2 dark:border-gray-800">
         <MessageInput chatId={chatId} />
       </div>
     </main>

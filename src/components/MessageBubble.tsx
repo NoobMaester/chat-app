@@ -31,9 +31,11 @@ export default function MessageBubble({
             {senderName}
           </p>
         )}
-        <p className="break-words text-base">{text}</p>
+        {isCurrentUser && (
+          <p className="text-sm font-medium mb-1 opacity-90 text-left"> You </p>)}
+        <p className="break-words text-left">{text}</p>
         {timestamp && (
-          <p className="text-xs mt-1 opacity-75">{timestamp}</p>
+          <p className="text-xs mt-1 text-left opacity-75">{timestamp}</p>
         )}
       </div>
     </div>
