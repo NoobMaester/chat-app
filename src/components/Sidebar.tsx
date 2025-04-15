@@ -6,6 +6,7 @@ import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import CreateChatModal from "../components/CreateChatModal";
+import { NotebookPen } from "lucide-react";
 
 interface Chat {
   id: string;
@@ -16,6 +17,7 @@ interface Chat {
 export default function Sidebar() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [showUserList, setShowUserList] = useState(false); // State to toggle user list
   const { chatId } = useParams(); // Get the active chatId from the URL
   const user = useMemo(() => ({ uid: "currentUserId" }), []); // Replace with actual user context or auth logic
 
@@ -61,9 +63,29 @@ export default function Sidebar() {
             className="text-purple-600 border hover:text-purple-800 text-xl font-bold cursor-pointer p-2 rounded"
             onClick={() => setShowModal(true)}
           >
-            + New Chat
+            <NotebookPen />
           </button>
         </div>
+
+        <button
+          className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium mb-4"
+          onClick={() => setShowUserList(!showUserList)} // Toggle user list visibility
+        >
+          {showUserList ? "Hide User List" : "Show User List"}
+        </button>
+
+        {showUserList && (
+          <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded shadow">
+            <h3 className="text-sm font-semibold mb-2">User List</h3>
+            <ul className="space-y-1">
+              {chats.map((chat) => (
+                <li key={chat.id} className="text-gray-700 dark:text-gray-300">
+                  {chat.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {chats.map((chat) => (
           <Link
