@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createChatGroup } from "@/lib/createChat"; // adjust import if needed
+import { createChatGroup } from "@/lib/createChatGroup"; // adjust import if needed
 import { useAuth } from "@/context/AuthContext";
 
 interface Props {
