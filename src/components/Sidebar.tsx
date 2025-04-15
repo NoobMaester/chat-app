@@ -1,8 +1,8 @@
 "use client";
 
 import { db } from "@/firebase/config";
-import { collection, onSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { collection, onSnapshot, getDoc, doc as firestoreDoc } from "firebase/firestore";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import CreateChatModal from "../components/CreateChatModal";
@@ -10,24 +10,47 @@ import CreateChatModal from "../components/CreateChatModal";
 interface Chat {
   id: string;
   name: string;
+  members?: string[];
 }
 
 export default function Sidebar() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [showModal, setShowModal] = useState(false);
   const { chatId } = useParams(); // Get the active chatId from the URL
+  const user = useMemo(() => ({ uid: "currentUserId" }), []); // Replace with actual user context or auth logic
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "chats"), (snapshot) => {
-      const rooms = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        name: doc.data().name || "Unnamed Chat",
-      }));
+    const unsubscribe = onSnapshot(collection(db, "chats"), async (snapshot) => {
+      const rooms = await Promise.all(
+        snapshot.docs.map(async (doc) => {
+          const data = doc.data() as Chat;
+          const members: string[] = data.members || [];
+          let displayName = data.name || "Unnamed Chat";
+
+          // If the chat is a direct message (DM), get the other user's display name
+          if (!data.name && members.length === 2 && user) {
+            const otherUserId = members.find((uid) => uid !== user.uid);
+            if (otherUserId) {
+              const otherUserDoc = await getDoc(firestoreDoc(db, "users", otherUserId));
+              if (otherUserDoc.exists()) {
+                const otherUserData = otherUserDoc.data() as { displayName?: string };
+                displayName = otherUserData?.displayName || "Unknown User";
+              }
+            }
+          }
+
+          return {
+            id: doc.id,
+            name: displayName,
+            members,
+          };
+        })
+      );
       setChats(rooms);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   return (
     <aside>

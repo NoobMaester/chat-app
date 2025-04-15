@@ -1,7 +1,9 @@
+'use client'
+
 import { useAuth } from "@/context/AuthContext";
 import useUsers from "@/hooks/useUsers";
 import { createDirectMessageChat } from "@/lib/createDM";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function UserList() {
   const { user } = useAuth();

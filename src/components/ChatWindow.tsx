@@ -17,13 +17,31 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [chatName, setChatName] = useState<string>("");
 
-  // Fetch chat name
+  // Fetch chat name or user name
   useEffect(() => {
     const fetchChatName = async () => {
       try {
         const chatDoc = await getDoc(doc(db, "chats", chatId));
         if (chatDoc.exists()) {
-          setChatName(chatDoc.data().name || "Unnamed Chat");
+          const chatData = chatDoc.data();
+          const members: string[] = chatData.members || [];
+          if (chatData.name) {
+            // Use the chat name for group chats
+            setChatName(chatData.name);
+          } else if (members.length === 2 && user) {
+            // Fetch the other user's name for direct messages
+            const otherUserId = members.find((uid) => uid !== user.uid);
+            if (otherUserId) {
+              const otherUserDoc = await getDoc(doc(db, "users", otherUserId));
+              if (otherUserDoc.exists()) {
+                setChatName(otherUserDoc.data()?.displayName || "Unknown User");
+              } else {
+                setChatName("Unknown User");
+              }
+            }
+          } else {
+            setChatName("Unnamed Chat");
+          }
         } else {
           setChatName("Chat Not Found");
         }
@@ -34,7 +52,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
     };
 
     fetchChatName();
-  }, [chatId]);
+  }, [chatId, user]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -46,7 +64,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
       {/* Chat Header */}
       <div className="p-4 border-b-2 border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
         <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-          {chatName} Chat
+          {chatName}
         </h1>
       </div>
 
