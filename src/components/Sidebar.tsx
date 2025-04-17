@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import CreateChatModal from "../components/CreateChatModal";
 import { NotebookPen } from "lucide-react";
+import UserList from "./UserList"; // Import the UserList component
 
 interface Chat {
   id: string;
@@ -75,16 +76,7 @@ export default function Sidebar() {
         </button>
 
         {showUserList && (
-          <div className="bg-gray-100 dark:bg-gray-800 p-2 rounded shadow">
-            <h3 className="text-sm font-semibold mb-2">User List</h3>
-            <ul className="space-y-1">
-              {chats.map((chat) => (
-                <li key={chat.id} className="text-gray-700 dark:text-gray-300">
-                  {chat.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <UserList/>
         )}
 
         {chats.map((chat) => (
