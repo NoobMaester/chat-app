@@ -6,7 +6,7 @@ Using [Next.js](https://nextjs.org), TypeScript, Tailwind CSS, Firebase (Firesto
 ## Project Features:
 
 - User Authentication – Signup and login using Firebase Authentication
-- Real-Time Messaging – Instant message updates with Firebase Firestore
+- Real-Time Messaging – Instant message updates with Firestore as a database 
 - Chat Rooms – Users can join or create different chat rooms
 - Dark Mode Toggle – Option to switch between light and dark themes
 
