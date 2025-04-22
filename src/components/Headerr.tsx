@@ -1,9 +1,18 @@
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Headerr() {
   const { user } = useAuth(); // Get the current user from AuthContext
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/chat");
+    }
+  }, [user, router]);
 
   return (
     <header className="bg-[#7b3cd3] w-full border-b border-[#9158e0] dark:border-gray-800">

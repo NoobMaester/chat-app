@@ -56,7 +56,7 @@ export default function Sidebar() {
   }, [user]);
 
   return (
-    <aside>
+    <aside className="h-full overflow-y-auto">
       <div className="p-4 space-y-2">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">Chats</h2>
@@ -92,7 +92,6 @@ export default function Sidebar() {
             {chat.name}
           </Link>
         ))}
-
         {showModal && <CreateChatModal onClose={() => setShowModal(false)} />}
       </div>
     </aside>
