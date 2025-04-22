@@ -15,7 +15,7 @@ export default function ChatPage() {
         <Header onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
 
         <div className="flex flex-1 overflow-hidden relative">
-          {/* Sidebar with mobile responsiveness */}
+          
           <div
             className={`
             fixed md:relative
@@ -49,7 +49,7 @@ export default function ChatPage() {
 
           {/* Main chat window */}
           <div className="flex flex-1 overflow-hidden">
-            <ChatWindow chatId="default" />
+            <ChatWindow chatId="general" />
           </div>
         </div>
       </div>
