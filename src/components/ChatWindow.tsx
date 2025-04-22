@@ -6,7 +6,6 @@ import { useAuth } from "@/context/AuthContext";
 import { formatRelative } from "date-fns";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase/config";
-
 interface ChatWindowProps {
   chatId: string;
 }
@@ -29,7 +28,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
             // Use the chat name for group chats
             setChatName(chatData.name);
           } else if (members.length === 2 && user) {
-            // Fetch the other user's name for direct messages
+            // Handle direct messages
             const otherUserId = members.find((uid) => uid !== user.uid);
             if (otherUserId) {
               const otherUserDoc = await getDoc(doc(db, "users", otherUserId));
@@ -54,21 +53,20 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
     fetchChatName();
   }, [chatId, user]);
 
-  // Auto-scroll to bottom when new messages arrive
+  // Scroll to the bottom of the chat when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return (
     <main className="flex-1 flex flex-col h-full bg-white dark:bg-gray-900">
-      {/* Chat Header */}
+      
       <div className="p-4 border-b-2 border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
         <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
           {chatName}
         </h1>
       </div>
 
-      {/* Messages Container */}
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-col space-y-4 p-4">
           {messages.map((message) => (
@@ -89,7 +87,6 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
         </div>
       </div>
 
-      {/* Message Input Area */}
       <div className="p-4 border-t-2 dark:border-gray-800">
         <MessageInput chatId={chatId} />
       </div>

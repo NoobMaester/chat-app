@@ -1,32 +1,26 @@
-
-import { collection, query, where, getDocs, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
-export const createDirectMessageChat = async (uid1: string, uid2: string) => {
-  const members = [uid1, uid2].sort(); // sort to keep consistent ordering
+export async function getOrCreateDirectMessageChat(user1Id: string, user2Id: string) {
+  // Generate a unique identifier for the direct message chat
+  const chatId = [user1Id, user2Id].sort().join("_");
 
-  const q = query(
-    collection(db, "chats"),
-    where("type", "==", "dm"),
-    where("members", "array-contains", uid1)
-  );
+  // Query Firestore to check if the chat already exists
+  const chatsRef = collection(db, "chats");
+  const q = query(chatsRef, where("id", "==", chatId));
+  const querySnapshot = await getDocs(q);
 
-  const snapshot = await getDocs(q);
-  const existingChat = snapshot.docs.find((doc) => {
-    const data = doc.data();
-    const chatMembers = (data.members || []).sort();
-    return JSON.stringify(chatMembers) === JSON.stringify(members);
-  });
-
-  if (existingChat) {
-    return existingChat.id;
+  if (!querySnapshot.empty) {
+    // Chat already exists, return the existing chat ID
+    return querySnapshot.docs[0].id;
   }
 
-  const docRef = await addDoc(collection(db, "chats"), {
-    type: "dm",
-    members,
-    createdAt: serverTimestamp(),
+  // Chat does not exist, create a new one
+  const newChat = await addDoc(chatsRef, {
+    id: chatId,
+    members: [user1Id, user2Id],
+    createdAt: new Date(),
   });
 
-  return docRef.id;
-};
+  return newChat.id;
+}

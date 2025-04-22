@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import CreateChatModal from "../components/CreateChatModal";
 import { NotebookPen } from "lucide-react";
-import UserList from "./UserList"; // Import the UserList component
+import UserList from "./UserList";
 
 interface Chat {
   id: string;
@@ -18,9 +18,9 @@ interface Chat {
 export default function Sidebar() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [showUserList, setShowUserList] = useState(false); // State to toggle user list
-  const { chatId } = useParams(); // Get the active chatId from the URL
-  const user = useMemo(() => ({ uid: "currentUserId" }), []); // Replace with actual user context or auth logic
+  const [showUserList, setShowUserList] = useState(false);
+  const { chatId } = useParams();
+  const user = useMemo(() => ({ uid: "currentUserId" }), []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "chats"), async (snapshot) => {

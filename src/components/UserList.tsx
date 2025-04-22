@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext";
 import useUsers from "@/hooks/useUsers";
-import { createDirectMessageChat } from "@/lib/createDM";
+import { getOrCreateDirectMessageChat } from "@/lib/createDM";
 import { useRouter } from "next/navigation";
 
 export default function UserList() {
@@ -15,7 +15,7 @@ export default function UserList() {
       console.error("User is not authenticated.");
       return;
     }
-    const chatId = await createDirectMessageChat(user.uid, otherUserId);
+    const chatId = await getOrCreateDirectMessageChat(user.uid, otherUserId);
     router.push(`/chat/${chatId}`);
   };
 
