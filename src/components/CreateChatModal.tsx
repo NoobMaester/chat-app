@@ -18,7 +18,7 @@ export default function CreateChatModal({ onClose }: Props) {
     setLoading(true);
     try {
       if (user?.uid) {
-        await createChatGroup(groupName, user.uid);
+        await createChatGroup(groupName, { uid: user.uid });
       } else {
         throw new Error("User ID is undefined");
       }
