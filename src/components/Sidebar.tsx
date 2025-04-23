@@ -8,6 +8,8 @@ import {
   doc as firestoreDoc,
   query,
   where,
+  orderBy,
+  FieldValue
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -15,12 +17,18 @@ import { useParams } from "next/navigation";
 import CreateChatModal from "../components/CreateChatModal";
 import { NotebookPen } from "lucide-react";
 import UserList from "./UserList";
-import { useAuth } from "@/context/AuthContext"; 
+import { useAuth } from "@/context/AuthContext";
 
 interface Chat {
   id: string;
   name: string;
   members?: string[];
+  lastMessage?: {
+    text: string;
+    senderId: string;
+    senderName?: string;
+    timestamp: FieldValue | Date;
+  };
 }
 
 export default function Sidebar() {
@@ -28,12 +36,16 @@ export default function Sidebar() {
   const [showModal, setShowModal] = useState(false);
   const [showUserList, setShowUserList] = useState(false);
   const { chatId } = useParams();
-  const { user } = useAuth(); 
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user?.uid) return;
 
-    const q = query(collection(db, "chats"), where("members", "array-contains", user.uid));
+    const q = query(
+      collection(db, "chats"),
+      where("members", "array-contains", user.uid),
+      orderBy("lastMessageAt", "desc")
+    );
 
     const unsubscribe = onSnapshot(q, async (snapshot) => {
       const rooms = await Promise.all(
@@ -45,9 +57,13 @@ export default function Sidebar() {
           if (!data.name && members.length === 2) {
             const otherUserId = members.find((uid) => uid !== user.uid);
             if (otherUserId) {
-              const otherUserDoc = await getDoc(firestoreDoc(db, "users", otherUserId));
+              const otherUserDoc = await getDoc(
+                firestoreDoc(db, "users", otherUserId)
+              );
               if (otherUserDoc.exists()) {
-                const otherUserData = otherUserDoc.data() as { displayName?: string };
+                const otherUserData = otherUserDoc.data() as {
+                  displayName?: string;
+                };
                 displayName = otherUserData?.displayName || "Unknown User";
               }
             }
@@ -57,6 +73,12 @@ export default function Sidebar() {
             id: doc.id,
             name: displayName,
             members,
+            lastMessage: data.lastMessage || {
+              text: "No messages yet",
+              senderId: "",
+              senderName: "",
+              timestamp: new Date(),
+            },
           };
         })
       );
@@ -100,6 +122,15 @@ export default function Sidebar() {
             }`}
           >
             {chat.name}
+            {chat.lastMessage?.text && (
+              <div className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                {chat.lastMessage.senderId === user?.uid
+                  ? `You: ${chat.lastMessage.text}`
+                  : `${chat.lastMessage.senderName || "User"}: ${
+                      chat.lastMessage.text
+                    }`}
+              </div>
+            )}
           </Link>
         ))}
 

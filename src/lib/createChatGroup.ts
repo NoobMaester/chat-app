@@ -7,6 +7,7 @@ export async function createChatGroup(name: string, currentUser: { uid: string }
       type: "group",
       name,
       createdAt: serverTimestamp(),
+      lastMessageAt: serverTimestamp(),
       members: [currentUser.uid],
     });
     return docRef.id;
